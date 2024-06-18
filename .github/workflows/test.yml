@@ -35,6 +35,8 @@ jobs:
 
       - name: Run Local Testing Script
         run: scripts/local_testing.sh -l
+        env:
+          CI: true    
     
       - name: List images
         run: docker images
