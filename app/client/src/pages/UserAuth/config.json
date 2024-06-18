@@ -2,12 +2,12 @@
     "clientId": "Tywflo1cX1zVfZDzy4FUKbDo",
     "authorizeUri": "https://fidm.us1.gigya.com/oidc/op/v1.0/4_lAYiWUZ69vbwCzNEhKvvcA/authorize",
     "tokenUri": "https://fidm.us1.gigya.com/oidc/op/v1.0/4_lAYiWUZ69vbwCzNEhKvvcA/token",
-    "redirectUri": "https://seed-webapp-sso.msa.apps.yokogawa.dev/callback", 
+    "redirectUri": "https://cloud.opst1.apps.yokogawa.build/forms/callback", 
     "userInfoUri": "https://fidm.us1.gigya.com/oidc/op/v1.0/4_lAYiWUZ69vbwCzNEhKvvcA/userinfo",
     "logOutUri": "https://sso-static.opst1.apps.yokogawa.build/oidcLogout.php",
-    "adminUrl": "https://sso.msa.apps.yokogawa.dev/admin/auth/user?tenant=YDX",
+    "adminUrl": "https://sso.opst1.apps.yokogawa.build/admin/auth/user?tenant=YDX",
     "scope": "openid email profile tenant",
     "responseType": "code",
     "responseMode": "query",
-    "platformTokenServiceUri": "https://api.msa.apps.yokogawa.dev/tokens/v1/"
+    "platformTokenServiceUri": "https://api.opst1.apps.yokogawa.build/tokens/v1/"
 }

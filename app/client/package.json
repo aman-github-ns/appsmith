@@ -1,6 +1,7 @@
 {
   "name": "appsmith",
   "version": "0.1.0",
+  "homepage": "/forms/",
   "private": true,
   "exports": {
     "./lib/*": "./lib/*.js"
