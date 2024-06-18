@@ -88,11 +88,12 @@ pretty_print "Server build successful. Starting client build ..."
 
 popd
 pushd app/client > /dev/null
-yarn > /dev/null
-if ! yarn build > /dev/null; then
+yarn --verbose
+if ! yarn build --verbose; then
   echo Client build failed >&2
   exit 1
 fi
+
 pretty_print "Client build successful. Starting RTS build ..."
 
 popd
