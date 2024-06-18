@@ -33,5 +33,10 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'		  
+
       - name: Run Local Testing Script
         run: scripts/local_testing.sh -l
