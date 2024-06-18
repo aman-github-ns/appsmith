@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Redirect, useLocation } from "react-router-dom";
 import { connect, useSelector } from "react-redux";
 import type { InjectedFormProps, DecoratedFormProps } from "redux-form";
@@ -10,24 +10,52 @@ import {
 } from "@appsmith/constants/forms";
 import { FORGOT_PASSWORD_URL, SETUP, SIGN_UP_URL } from "constants/routes";
 import {
+  LOGIN_PAGE_TITLE,
+  LOGIN_PAGE_EMAIL_INPUT_LABEL,
+  LOGIN_PAGE_PASSWORD_INPUT_LABEL,
+  LOGIN_PAGE_PASSWORD_INPUT_PLACEHOLDER,
+  LOGIN_PAGE_EMAIL_INPUT_PLACEHOLDER,
+  FORM_VALIDATION_EMPTY_PASSWORD,
+  FORM_VALIDATION_INVALID_EMAIL,
+  LOGIN_PAGE_LOGIN_BUTTON_TEXT,
+  LOGIN_PAGE_FORGOT_PASSWORD_TEXT,
+  LOGIN_PAGE_SIGN_UP_LINK_TEXT,
+  LOGIN_PAGE_INVALID_CREDS_ERROR,
   LOGIN_PAGE_INVALID_CREDS_FORGOT_PASSWORD_LINK,
   NEW_TO_APPSMITH,
   createMessage,
 } from "@appsmith/constants/messages";
-import { isEmptyString } from "utils/formhelpers";
+import { FormGroup } from "design-system-old";
+import { Button, Link, Callout } from "design-system";
+import FormTextField from "components/utils/ReduxFormTextField";
+import ThirdPartyAuth from "pages/UserAuth/ThirdPartyAuth";
+import { isEmail, isEmptyString } from "utils/formhelpers";
 import type { LoginFormValues } from "pages/UserAuth/helpers";
 
+import {
+  SpacedSubmitForm,
+  FormActions,
+  EmailFormWrapper,
+} from "pages/UserAuth/StyledComponents";
+import AnalyticsUtil from "@appsmith/utils/AnalyticsUtil";
 import { LOGIN_SUBMIT_PATH } from "@appsmith/constants/ApiConstants";
+import PerformanceTracker, {
+  PerformanceTransactionName,
+} from "utils/PerformanceTracker";
 import { getIsSafeRedirectURL } from "utils/helpers";
 import { getCurrentUser } from "selectors/usersSelectors";
+import Container from "pages/UserAuth/Container";
 import {
   getThirdPartyAuths,
   getIsFormLoginEnabled,
   getTenantConfig,
 } from "@appsmith/selectors/tenantSelectors";
+import Helmet from "react-helmet";
 import { useFeatureFlag } from "utils/hooks/useFeatureFlag";
 import { FEATURE_FLAG } from "@appsmith/entities/FeatureFlag";
 import { getHTMLPageTitle } from "@appsmith/utils/BusinessFeatures/brandingPageHelpers";
+
+import config from './config.json';
 
 // const validate = (values: LoginFormValues, props: ValidateProps) => {
 //   const errors: LoginFormValues = {};
@@ -62,17 +90,8 @@ type LoginFormProps = {
 // >;
 
 export function Login(props: LoginFormProps) {
-  const { emailValue: email, error, valid } = props;
-  const isFormValid = valid && email && !isEmptyString(email);
   const location = useLocation();
-  const isFormLoginEnabled = useSelector(getIsFormLoginEnabled);
-  const socialLoginList = useSelector(getThirdPartyAuths);
   const queryParams = new URLSearchParams(location.search);
-  const isBrandingEnabled = useFeatureFlag(
-    FEATURE_FLAG.license_branding_enabled,
-  );
-  const tentantConfig = useSelector(getTenantConfig);
-  const { instanceName } = tentantConfig;
   let showError = false;
   let errorMessage = "";
   const currentUser = useSelector(getCurrentUser);
@@ -97,6 +116,26 @@ export function Login(props: LoginFormProps) {
     forgotPasswordURL += `?email=${props.emailValue}`;
   }
 
+  localStorage.setItem('token','')
+  const token = localStorage.getItem('token')
+
+  const handleToken = () => {
+      const params = [
+        'client_id=' + config.clientId,
+        'redirect_uri=' + encodeURIComponent(config.redirectUri),
+        'scope=' + config.scope,
+        'response_type=' + config.responseType,
+        'response_mode=' + config.responseMode
+      ];
+      window.location.href = config.authorizeUri + '?' + params.join('&');
+  }
+
+  useEffect(()=> {
+    if(!token) {
+      handleToken();
+    }
+  }, [])
+
   // const footerSection = isFormLoginEnabled && (
   //   <div className="px-2 flex align-center justify-center text-center text-[color:var(--ads-v2\-color-fg)] text-[14px]">
   //     {createMessage(NEW_TO_APPSMITH)}&nbsp;
@@ -111,8 +150,7 @@ export function Login(props: LoginFormProps) {
   //   </div>
   // );
 
-  return (
-    <></>
+  return (<></>
   );
 }
 
