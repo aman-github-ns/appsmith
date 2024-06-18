@@ -170,60 +170,60 @@ export function Login(props: LoginFormProps) {
         <ThirdPartyAuth logins={socialLoginList} type={"SIGNIN"} />
       )}
       {isFormLoginEnabled && (
-        <EmailFormWrapper>
-          <SpacedSubmitForm action={loginURL} method="POST">
-            <FormGroup
-              intent={error ? "danger" : "none"}
-              label={createMessage(LOGIN_PAGE_EMAIL_INPUT_LABEL)}
-            >
-              <FormTextField
-                autoFocus
-                name={LOGIN_FORM_EMAIL_FIELD_NAME}
-                placeholder={createMessage(LOGIN_PAGE_EMAIL_INPUT_PLACEHOLDER)}
-                type="email"
-              />
-            </FormGroup>
-            <FormGroup
-              intent={error ? "danger" : "none"}
-              label={createMessage(LOGIN_PAGE_PASSWORD_INPUT_LABEL)}
-            >
-              <FormTextField
-                name={LOGIN_FORM_PASSWORD_FIELD_NAME}
-                placeholder={createMessage(
-                  LOGIN_PAGE_PASSWORD_INPUT_PLACEHOLDER,
-                )}
-                type="password"
-              />
-            </FormGroup>
+        // <EmailFormWrapper>
+        //   <SpacedSubmitForm action={loginURL} method="POST">
+        //     <FormGroup
+        //       intent={error ? "danger" : "none"}
+        //       label={createMessage(LOGIN_PAGE_EMAIL_INPUT_LABEL)}
+        //     >
+        //       <FormTextField
+        //         autoFocus
+        //         name={LOGIN_FORM_EMAIL_FIELD_NAME}
+        //         placeholder={createMessage(LOGIN_PAGE_EMAIL_INPUT_PLACEHOLDER)}
+        //         type="email"
+        //       />
+        //     </FormGroup>
+        //     <FormGroup
+        //       intent={error ? "danger" : "none"}
+        //       label={createMessage(LOGIN_PAGE_PASSWORD_INPUT_LABEL)}
+        //     >
+        //       <FormTextField
+        //         name={LOGIN_FORM_PASSWORD_FIELD_NAME}
+        //         placeholder={createMessage(
+        //           LOGIN_PAGE_PASSWORD_INPUT_PLACEHOLDER,
+        //         )}
+        //         type="password"
+        //       />
+        //     </FormGroup>
 
-            <FormActions>
-              <Button
-                isDisabled={!isFormValid}
-                kind="primary"
-                onClick={() => {
-                  PerformanceTracker.startTracking(
-                    PerformanceTransactionName.LOGIN_CLICK,
-                  );
-                  AnalyticsUtil.logEvent("LOGIN_CLICK", {
-                    loginMethod: "EMAIL",
-                  });
-                }}
-                size="md"
-                type="submit"
-              >
-                {createMessage(LOGIN_PAGE_LOGIN_BUTTON_TEXT)}
-              </Button>
-            </FormActions>
-          </SpacedSubmitForm>
-          <Link
-            className="justify-center"
-            kind="secondary"
-            target="_self"
-            to={forgotPasswordURL}
-          >
-            {createMessage(LOGIN_PAGE_FORGOT_PASSWORD_TEXT)}
-          </Link>
-        </EmailFormWrapper>
+        //     <FormActions>
+        //       <Button
+        //         isDisabled={!isFormValid}
+        //         kind="primary"
+        //         onClick={() => {
+        //           PerformanceTracker.startTracking(
+        //             PerformanceTransactionName.LOGIN_CLICK,
+        //           );
+        //           AnalyticsUtil.logEvent("LOGIN_CLICK", {
+        //             loginMethod: "EMAIL",
+        //           });
+        //         }}
+        //         size="md"
+        //         type="submit"
+        //       >
+        //         {createMessage(LOGIN_PAGE_LOGIN_BUTTON_TEXT)}
+        //       </Button>
+        //     </FormActions>
+        //   </SpacedSubmitForm>
+        //   <Link
+        //     className="justify-center"
+        //     kind="secondary"
+        //     target="_self"
+        //     to={forgotPasswordURL}
+        //   >
+        //     {createMessage(LOGIN_PAGE_FORGOT_PASSWORD_TEXT)}
+        //   </Link>
+        // </EmailFormWrapper>
       )}
     </Container>
   );
