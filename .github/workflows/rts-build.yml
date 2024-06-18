@@ -3,8 +3,8 @@ name: Build RTS Workflow
 
 on:
   # This line enables manual triggering of this workflow.
-  push:
-    branches: deploy
+  # push:
+  #   branches: deploy
   workflow_dispatch:
   workflow_call:
     inputs:
