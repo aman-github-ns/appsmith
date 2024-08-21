@@ -25,6 +25,9 @@ module.exports = {
   },
   webpack: {
     configure: {
+      output: {
+        publicPath: "/forms/",
+      },
       resolve: {
         alias: {
           "lodash-es": "lodash",
@@ -133,7 +136,7 @@ module.exports = {
         },
       ],
       plugins: [
-        // Replace BlueprintJS’s icon component with our own implementation
+        // Replace BlueprintJS's icon component with our own implementation
         // that code-splits icons away
         new webpack.NormalModuleReplacementPlugin(
           /@blueprintjs\/core\/lib\/\w+\/components\/icon\/icon\.\w+/,
