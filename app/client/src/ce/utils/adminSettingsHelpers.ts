@@ -22,9 +22,12 @@ export const saveAllowed = (
         socialLoginList.includes("google"),
       checkGithubAuth =
         settings["APPSMITH_OAUTH2_GITHUB_CLIENT_ID"] !== "" &&
-        socialLoginList.includes("github");
+        socialLoginList.includes("github"),
+      checkSapCdcAuth =
+        settings["APPSMITH_OAUTH2_SAPCDC_CLIENT_ID"] !== "" &&
+        socialLoginList.includes("sapcdc");
 
-    return checkFormLogin || checkGoogleAuth || checkGithubAuth;
+    return checkFormLogin || checkGoogleAuth || checkGithubAuth || checkSapCdcAuth;
   } else {
     return connectedMethodsCount >= 2;
   }

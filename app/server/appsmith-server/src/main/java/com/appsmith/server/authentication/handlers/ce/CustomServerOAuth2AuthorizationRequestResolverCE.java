@@ -117,6 +117,13 @@ public class CustomServerOAuth2AuthorizationRequestResolverCE implements ServerO
             CommonConfig commonConfig,
             RedirectHelper redirectHelper,
             CustomOauth2ClientRepositoryManager ouath2ClientManager) {
+        System.out.println(
+                "CustomServerOAuth2AuthorizationRequestResolverCE.CustomServerOAuth2AuthorizationRequestResolverCE"
+                        + clientRegistrationRepository + ' ' + authorizationRequestMatcher + ' ' + commonConfig + ' '
+                        + redirectHelper + ' ' + ouath2ClientManager);
+        log.info("CustomServerOAuth2AuthorizationRequestResolverCE.CustomServerOAuth2AuthorizationRequestResolverCE"
+                + clientRegistrationRepository + ' ' + authorizationRequestMatcher + ' ' + commonConfig + ' '
+                + redirectHelper + ' ' + ouath2ClientManager);
         this.redirectHelper = redirectHelper;
         this.ouath2ClientManager = ouath2ClientManager;
         Assert.notNull(clientRegistrationRepository, "clientRegistrationRepository cannot be null");
@@ -126,8 +133,11 @@ public class CustomServerOAuth2AuthorizationRequestResolverCE implements ServerO
         this.commonConfig = commonConfig;
     }
 
+    // this is likely the method that is called when the user clicks on the "Authorize" button in the OAuth2 login page
     @Override
     public Mono<OAuth2AuthorizationRequest> resolve(ServerWebExchange exchange) {
+        System.out.println("CustomServerOAuth2AuthorizationRequestResolverCE.resolve(single param)" + exchange);
+        log.info("CustomServerOAuth2AuthorizationRequestResolverCE.resolve(single param)" + exchange);
         return this.authorizationRequestMatcher
                 .matches(exchange)
                 .filter(ServerWebExchangeMatcher.MatchResult::isMatch)
@@ -139,6 +149,10 @@ public class CustomServerOAuth2AuthorizationRequestResolverCE implements ServerO
 
     @Override
     public Mono<OAuth2AuthorizationRequest> resolve(ServerWebExchange exchange, String clientRegistrationId) {
+        System.out.println("CustomServerOAuth2AuthorizationRequestResolverCE.resolve (double param)" + exchange + " "
+                + clientRegistrationId);
+        log.info("CustomServerOAuth2AuthorizationRequestResolverCE.resolve (double param)" + exchange + " "
+                + clientRegistrationId);
         return this.findByRegistrationId(clientRegistrationId).flatMap(clientRegistration -> {
             if (MISSING_VALUE_SENTINEL.equals(clientRegistration.getClientId())) {
                 return Mono.error(new AppsmithException(AppsmithError.OAUTH_NOT_AVAILABLE, clientRegistrationId));
@@ -155,18 +169,27 @@ public class CustomServerOAuth2AuthorizationRequestResolverCE implements ServerO
      * @return                      Client registration repository
      */
     private Mono<ClientRegistration> findByRegistrationId(String clientRegistration) {
+        System.out.println(
+                "CustomServerOAuth2AuthorizationRequestResolverCE.findByRegistrationId" + " " + clientRegistration);
+        log.info("CustomServerOAuth2AuthorizationRequestResolverCE.findByRegistrationId" + " " + clientRegistration);
         BaseClientRegistrationRepository customClientRegistrationRepository =
                 this.ouath2ClientManager.findClientRegistrationRepositoryByRegistrationId(clientRegistration);
 
         Mono<ClientRegistration> clientRegistrationMono = customClientRegistrationRepository == null
                 ? this.clientRegistrationRepository.findByRegistrationId(clientRegistration)
                 : customClientRegistrationRepository.findByRegistrationId(clientRegistration);
+
+        log.info("customClientRegistrationRepository" + " " + clientRegistration);
         return clientRegistrationMono.switchIfEmpty(Mono.error(
                 () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid client registration id")));
     }
 
     private Mono<OAuth2AuthorizationRequest> authorizationRequest(
             ServerWebExchange exchange, ClientRegistration clientRegistration) {
+        System.out.println("CustomServerOAuth2AuthorizationRequestResolverCE.authorizationRequest" + " " + exchange
+                + " " + clientRegistration);
+        log.info("CustomServerOAuth2AuthorizationRequestResolverCE.authorizationRequest" + " " + exchange + " "
+                + clientRegistration);
         String redirectUriStr = expandRedirectUri(exchange.getRequest(), clientRegistration);
 
         Map<String, Object> attributes = new HashMap<>();
@@ -202,6 +225,10 @@ public class CustomServerOAuth2AuthorizationRequestResolverCE implements ServerO
             ClientRegistration clientRegistration,
             Map<String, Object> attributes,
             Map<String, Object> additionalParameters) {
+        System.out.println("CustomServerOAuth2AuthorizationRequestResolverCE.addAttributesAndAdditionalParameters" + " "
+                + clientRegistration + " " + attributes + " " + additionalParameters);
+        log.info("CustomServerOAuth2AuthorizationRequestResolverCE.addAttributesAndAdditionalParameters" + " "
+                + clientRegistration + " " + attributes + " " + additionalParameters);
 
         if (!CollectionUtils.isEmpty(clientRegistration.getScopes())
                 && clientRegistration.getScopes().contains(OidcScopes.OPENID)) {
@@ -237,6 +264,8 @@ public class CustomServerOAuth2AuthorizationRequestResolverCE implements ServerO
      * @return Publishes a single String, that is the generated key.
      */
     private Mono<String> generateKey(ServerHttpRequest request) {
+        System.out.println("CustomServerOAuth2AuthorizationRequestResolverCE.generateKey" + " " + request);
+        log.info("CustomServerOAuth2AuthorizationRequestResolverCE.generateKey" + " " + request);
         return redirectHelper.getRedirectUrl(request).map(redirectUrl -> {
             String stateKey = this.stateGenerator.generateKey();
             stateKey = stateKey + "@" + Security.STATE_PARAMETER_ORIGIN + redirectUrl;
@@ -261,6 +290,10 @@ public class CustomServerOAuth2AuthorizationRequestResolverCE implements ServerO
      * @return expanded URI
      */
     private static String expandRedirectUri(ServerHttpRequest request, ClientRegistration clientRegistration) {
+        System.out.println("CustomServerOAuth2AuthorizationRequestResolverCE.expandRedirectUri" + " " + request + " "
+                + clientRegistration);
+        log.info("CustomServerOAuth2AuthorizationRequestResolverCE.expandRedirectUri" + " " + request + " "
+                + clientRegistration);
         Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put(DEFAULT_REGISTRATION_ID_URI_VARIABLE_NAME, clientRegistration.getRegistrationId());
 
@@ -303,6 +336,10 @@ public class CustomServerOAuth2AuthorizationRequestResolverCE implements ServerO
      * @since 5.2
      */
     private void addNonceParameters(Map<String, Object> attributes, Map<String, Object> additionalParameters) {
+        System.out.println("CustomServerOAuth2AuthorizationRequestResolverCE.addNonceParameters" + " " + attributes
+                + " " + additionalParameters);
+        log.info("CustomServerOAuth2AuthorizationRequestResolverCE.addNonceParameters" + " " + attributes + " "
+                + additionalParameters);
         try {
             String nonce = this.secureKeyGenerator.generateKey();
             String nonceHash = createHash(nonce);
@@ -325,6 +362,10 @@ public class CustomServerOAuth2AuthorizationRequestResolverCE implements ServerO
      * @since 5.2
      */
     private void addPkceParameters(Map<String, Object> attributes, Map<String, Object> additionalParameters) {
+        System.out.println("CustomServerOAuth2AuthorizationRequestResolverCE.addPkceParameters" + " " + attributes + " "
+                + additionalParameters);
+        log.info("CustomServerOAuth2AuthorizationRequestResolverCE.addPkceParameters" + " " + attributes + " "
+                + additionalParameters);
         String codeVerifier = this.secureKeyGenerator.generateKey();
         attributes.put(PkceParameterNames.CODE_VERIFIER, codeVerifier);
         try {
@@ -337,6 +378,8 @@ public class CustomServerOAuth2AuthorizationRequestResolverCE implements ServerO
     }
 
     private static String createHash(String value) throws NoSuchAlgorithmException {
+        System.out.println("CustomServerOAuth2AuthorizationRequestResolverCE.createHash" + " " + value);
+        log.info("CustomServerOAuth2AuthorizationRequestResolverCE.createHash" + " " + value);
         MessageDigest md = MessageDigest.getInstance("SHA-256");
         byte[] digest = md.digest(value.getBytes(StandardCharsets.US_ASCII));
         return Base64.getUrlEncoder().withoutPadding().encodeToString(digest);

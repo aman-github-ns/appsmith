@@ -118,6 +118,7 @@ export const SettingCategories = {
   SAML_AUTH: "saml-auth",
   OIDC_AUTH: "oidc-auth",
   DEVELOPER_SETTINGS: "developer-settings",
+  SAPCDC_AUTH: "sapcdc-auth",
 };
 
 export enum CategoryType {

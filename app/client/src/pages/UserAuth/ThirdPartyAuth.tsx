@@ -76,7 +76,7 @@ function SocialLoginButton(props: {
       renderAs="a"
       size="md"
       startIcon={
-        ["Google", "Github"].includes(props.name)
+        ["Google", "Github", "SAP CDC"].includes(props.name)
           ? startIcon[props.name]
           : "key-2-line"
       }
@@ -92,8 +92,10 @@ function ThirdPartyAuth(props: {
   logins: SocialLoginType[];
   type: SignInType;
 }) {
+  console.log('ThirdPartyAuth---', props);
   const socialLoginButtons = getSocialLoginButtonProps(props.logins).map(
     (item) => {
+      console.log('item---', item);
       return <SocialLoginButton key={item.name} {...item} type={props.type} />;
     },
   );

@@ -171,6 +171,11 @@ unset_unused_variables() {
     unset APPSMITH_OAUTH2_GOOGLE_CLIENT_SECRET
   fi
 
+  if [[ -z "${APPSMITH_OAUTH2_SAPCDC_CLIENT_ID}" ]] || [[ -z "${APPSMITH_OAUTH2_SAPCDC_CLIENT_SECRET}" ]]; then
+    unset APPSMITH_OAUTH2_SAPCDC_CLIENT_ID # If this field is empty is might cause application crash
+    unset APPSMITH_OAUTH2_SAPCDC_CLIENT_SECRET
+  fi
+
   if [[ -z "${APPSMITH_RECAPTCHA_SITE_KEY}" ]] || [[ -z "${APPSMITH_RECAPTCHA_SECRET_KEY}" ]] || [[ -z "${APPSMITH_RECAPTCHA_ENABLED}" ]]; then
     unset APPSMITH_RECAPTCHA_SITE_KEY # If this field is empty is might cause application crash
     unset APPSMITH_RECAPTCHA_SECRET_KEY

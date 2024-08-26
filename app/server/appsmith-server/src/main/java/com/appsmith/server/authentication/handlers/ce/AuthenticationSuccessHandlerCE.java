@@ -273,7 +273,10 @@ public class AuthenticationSuccessHandlerCE implements ServerAuthenticationSucce
             // invalidate any password which may have been set during a form login.
             LoginSource authenticationLoginSource = LoginSource.fromString(
                     ((OAuth2AuthenticationToken) authentication).getAuthorizedClientRegistrationId());
+            log.debug("the login source is {}", authenticationLoginSource);
+            log.debug("the login source is {}", user.toString());
             if (!authenticationLoginSource.equals(user.getSource())) {
+                // if (!user.getSource().equals(authenticationLoginSource)) {
                 user.setPassword(null);
                 user.setSource(authenticationLoginSource);
                 // Update the user in separate thread

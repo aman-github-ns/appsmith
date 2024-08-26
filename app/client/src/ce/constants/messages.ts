@@ -1441,6 +1441,8 @@ export const GOOGLE_AUTH_DESC = () =>
   "Enable your workspace to sign in with Google (OAuth 2.0) single sign-on (SSO).";
 export const GITHUB_AUTH_DESC = () =>
   "Enable your workspace to sign in with GitHub (OAuth 2.0) single sign-on (SSO).";
+export const SAPCDC_AUTH_DESC = () =>
+  "Enable your workspace to sign in with SAP CDC (OAuth 2.0) single sign-on (SSO).";
 export const SAML_AUTH_DESC = () =>
   "Enable your workspace to sign in with your preferred SAML2 compliant provider.";
 export const OIDC_AUTH_DESC = () =>

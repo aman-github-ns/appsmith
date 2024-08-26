@@ -58,6 +58,8 @@ public class UserControllerCE {
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
     public Mono<ResponseDTO<User>> create(@Valid @RequestBody User resource, ServerWebExchange exchange) {
+        System.out.println("UserControllerCE.create");
+        log.info("UserControllerCE.create");
         return userSignup
                 .signupAndLogin(resource, exchange)
                 .map(created -> new ResponseDTO<>(HttpStatus.CREATED.value(), created, null));
@@ -67,6 +69,8 @@ public class UserControllerCE {
     @PostMapping(consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
     public Mono<Void> createFormEncoded(ServerWebExchange exchange) {
+        System.out.println("UserControllerCE.create");
+        log.info("UserControllerCE.create");
         return userSignup.signupAndLoginFromFormData(exchange);
     }
 
@@ -78,6 +82,8 @@ public class UserControllerCE {
             @Valid @RequestBody UserSignupRequestDTO resource,
             @RequestHeader("Origin") String originHeader,
             ServerWebExchange exchange) {
+        System.out.println("UserControllerCE.createSuperUser");
+        log.info("UserControllerCE.createSuperUser");
         return userSignup
                 .signupAndLoginSuper(resource, originHeader, exchange)
                 .map(created -> new ResponseDTO<>(HttpStatus.CREATED.value(), created, null));
@@ -89,12 +95,16 @@ public class UserControllerCE {
             consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
     public Mono<Void> createSuperUserFromFormData(
             @RequestHeader("Origin") String originHeader, ServerWebExchange exchange) {
+        System.out.println("UserControllerCE.createSuperUserFromFormData");
+        log.info("UserControllerCE.createSuperUserFromFormData");
         return userSignup.signupAndLoginSuperFromFormData(originHeader, exchange);
     }
 
     @JsonView(Views.Public.class)
     @PutMapping()
     public Mono<ResponseDTO<User>> update(@RequestBody UserUpdateDTO updates, ServerWebExchange exchange) {
+        System.out.println("UserControllerCE.update");
+        log.info("UserControllerCE.update");
         return service.updateCurrentUser(updates, exchange)
                 .map(updatedUser -> new ResponseDTO<>(HttpStatus.OK.value(), updatedUser, null));
     }
@@ -102,6 +112,8 @@ public class UserControllerCE {
     @JsonView(Views.Public.class)
     @PutMapping("/leaveWorkspace/{workspaceId}")
     public Mono<ResponseDTO<User>> leaveWorkspace(@PathVariable String workspaceId) {
+        System.out.println("UserControllerCE.leaveWorkspace");
+        log.info("UserControllerCE.leaveWorkspace");
         return userWorkspaceService
                 .leaveWorkspace(workspaceId)
                 .map(user -> new ResponseDTO<>(HttpStatus.OK.value(), user, null));
@@ -116,6 +128,8 @@ public class UserControllerCE {
     @PostMapping("/forgotPassword")
     public Mono<ResponseDTO<Boolean>> forgotPasswordRequest(
             @RequestBody ResetUserPasswordDTO userPasswordDTO, @RequestHeader("Origin") String originHeader) {
+        System.out.println("UserControllerCE.forgotPasswordRequest");
+        log.info("UserControllerCE.forgotPasswordRequest");
         userPasswordDTO.setBaseUrl(originHeader);
         // We shouldn't leak information on whether this operation was successful or not to the client. This can enable
         // username scraping, where the response of this API can prove whether an email has an account or not.
@@ -128,6 +142,8 @@ public class UserControllerCE {
     @JsonView(Views.Public.class)
     @GetMapping("/verifyPasswordResetToken")
     public Mono<ResponseDTO<Boolean>> verifyPasswordResetToken(@RequestParam String token) {
+        System.out.println("UserControllerCE.verifyPasswordResetToken");
+        log.info("UserControllerCE.verifyPasswordResetToken");
         return service.verifyPasswordResetToken(token)
                 .map(result -> new ResponseDTO<>(HttpStatus.OK.value(), result, null));
     }
@@ -136,6 +152,8 @@ public class UserControllerCE {
     @PutMapping("/resetPassword")
     public Mono<ResponseDTO<Boolean>> resetPasswordAfterForgotPassword(
             @RequestBody ResetUserPasswordDTO userPasswordDTO) {
+        System.out.println("UserControllerCE.resetPasswordAfterForgotPassword");
+        log.info("UserControllerCE.resetPasswordAfterForgotPassword");
         return service.resetPasswordAfterForgotPassword(userPasswordDTO.getToken(), userPasswordDTO)
                 .map(result -> new ResponseDTO<>(HttpStatus.OK.value(), result, null));
     }
@@ -143,6 +161,8 @@ public class UserControllerCE {
     @JsonView(Views.Public.class)
     @GetMapping("/me")
     public Mono<ResponseDTO<UserProfileDTO>> getUserProfile(@AuthenticationPrincipal User user) {
+        System.out.println("UserControllerCE.getUserProfile");
+        log.info("UserControllerCE.getUserProfile");
         return service.buildUserProfileDTO(user)
                 .map(profile -> new ResponseDTO<>(HttpStatus.OK.value(), profile, null));
     }
@@ -161,6 +181,8 @@ public class UserControllerCE {
             @RequestBody InviteUsersDTO inviteUsersDTO,
             @RequestHeader("Origin") String originHeader,
             @RequestParam(required = false) String recaptchaToken) {
+        System.out.println("UserControllerCE.inviteUsers");
+        log.info("UserControllerCE.inviteUsers");
         return userAndAccessManagementService
                 .inviteUsers(inviteUsersDTO, originHeader, recaptchaToken)
                 .map(users -> new ResponseDTO<>(HttpStatus.OK.value(), users, null));
@@ -169,6 +191,8 @@ public class UserControllerCE {
     @JsonView(Views.Public.class)
     @PutMapping("/setReleaseNotesViewed")
     public Mono<ResponseDTO<Void>> setReleaseNotesViewed() {
+        System.out.println("UserControllerCE.setReleaseNotesViewed");
+        log.info("UserControllerCE.setReleaseNotesViewed");
         return sessionUserService
                 .getCurrentUser()
                 .flatMap(userDataService::setViewedCurrentVersionReleaseNotes)
@@ -178,6 +202,8 @@ public class UserControllerCE {
     @JsonView(Views.Public.class)
     @PostMapping(value = "/photo", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Mono<ResponseDTO<UserData>> uploadProfilePhoto(@RequestPart("file") Mono<Part> fileMono) {
+        System.out.println("UserControllerCE.uploadProfilePhoto");
+        log.info("UserControllerCE.uploadProfilePhoto");
         return fileMono.flatMap(userDataService::saveProfilePhoto)
                 .map(url -> new ResponseDTO<>(HttpStatus.OK.value(), url, null));
     }
@@ -185,12 +211,16 @@ public class UserControllerCE {
     @JsonView(Views.Public.class)
     @DeleteMapping("/photo")
     public Mono<ResponseDTO<Void>> deleteProfilePhoto() {
+        System.out.println("UserControllerCE.deleteProfilePhoto");
+        log.info("UserControllerCE.deleteProfilePhoto");
         return userDataService.deleteProfilePhoto().thenReturn(new ResponseDTO<>(HttpStatus.OK.value(), null, null));
     }
 
     @JsonView(Views.Public.class)
     @GetMapping("/photo")
     public Mono<Void> getProfilePhoto(ServerWebExchange exchange) {
+        System.out.println("UserControllerCE.getProfilePhoto");
+        log.info("UserControllerCE.getProfilePhoto");
         return userDataService.makeProfilePhotoResponse(exchange).switchIfEmpty(Mono.fromRunnable(() -> {
             exchange.getResponse().setStatusCode(HttpStatus.NOT_FOUND);
         }));
@@ -207,6 +237,8 @@ public class UserControllerCE {
     @JsonView(Views.Public.class)
     @GetMapping("/features")
     public Mono<ResponseDTO<Map<String, Boolean>>> getFeatureFlags() {
+        System.out.println("UserControllerCE.getFeatureFlags");
+        log.info("UserControllerCE.getFeatureFlags");
         return userDataService
                 .getFeatureFlagsForCurrentUser()
                 .map(map -> new ResponseDTO<>(HttpStatus.OK.value(), map, null));
@@ -221,7 +253,8 @@ public class UserControllerCE {
     public Mono<ResponseDTO<Boolean>> resendEmailVerification(
             @RequestBody ResendEmailVerificationDTO resendEmailVerificationDTO,
             @RequestHeader("Origin") String originHeader) {
-        resendEmailVerificationDTO.setBaseUrl(originHeader);
+        System.out.println("UserControllerCE.resendEmailVerification");
+        log.info("UserControllerCE.resendEmailVerification");
         return service.resendEmailVerification(resendEmailVerificationDTO, null)
                 .thenReturn(new ResponseDTO<>(HttpStatus.OK.value(), true, null));
     }
@@ -236,6 +269,8 @@ public class UserControllerCE {
             value = "/verifyEmailVerificationToken",
             consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
     public Mono<Void> verifyEmailVerificationToken(ServerWebExchange exchange) {
+        System.out.println("UserControllerCE.verifyEmailVerificationToken");
+        log.info("UserControllerCE.verifyEmailVerificationToken");
         return service.verifyEmailVerificationToken(exchange);
     }
 }

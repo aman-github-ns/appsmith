@@ -195,7 +195,7 @@ export default function DetailsForm(
               size="md"
               type="button"
             >
-              {createMessage(CONTINUE)}
+              {createMessage(()=>"Next step")}
             </Button>
           </ButtonWrapper>
         )}

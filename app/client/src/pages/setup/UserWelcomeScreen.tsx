@@ -86,7 +86,7 @@ export default memo(function UserWelcomeScreen(props: LandingPageProps) {
       <LandingPageContent>
         <StyledTextBanner isSuperUser={props.isSuperUser}>
           <StyledBannerHeader>
-            {createMessage(WELCOME_HEADER)}
+            {createMessage(()=>"Hello there")}
           </StyledBannerHeader>
           {props.isSuperUser && (
             <StyledBannerBody>{createMessage(WELCOME_BODY)}</StyledBannerBody>

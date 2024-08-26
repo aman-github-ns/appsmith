@@ -158,6 +158,7 @@ export function ActionButton({ method }: { method: AuthMethodType }) {
 }
 
 export function AuthPage({ authMethods }: { authMethods: AuthMethodType[] }) {
+  console.log('authMethods---', authMethods);
   return (
     <Wrapper>
       <SettingsFormWrapper>

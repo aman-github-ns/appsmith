@@ -3,6 +3,7 @@ import {
   EMAIL_SETUP_DOC,
   GITHUB_SIGNUP_SETUP_DOC,
   GOOGLE_SIGNUP_SETUP_DOC,
+SAPCDC_AUTH_SETUP_DOC
 } from "constants/ThirdPartyConstants";
 import type { AdminConfigType } from "@appsmith/pages/AdminSettings/config/types";
 import {
@@ -18,6 +19,7 @@ import SamlSso from "assets/images/saml.svg";
 import OIDC from "assets/images/oidc.svg";
 import Github from "assets/images/Github.png";
 import Lock from "assets/images/lock-password-line.svg";
+import Sapcdc from "assets/images/SAPCDC.png";
 import { useSelector } from "react-redux";
 import {
   getThirdPartyAuths,
@@ -30,6 +32,7 @@ import {
   OIDC_AUTH_DESC,
   SAML_AUTH_DESC,
   createMessage,
+  SAPCDC_AUTH_DESC
 } from "@appsmith/constants/messages";
 import { isSAMLEnabled, isOIDCEnabled } from "@appsmith/utils/planHelpers";
 import { selectFeatureFlags } from "@appsmith/selectors/featureFlagsSelectors";
@@ -129,6 +132,62 @@ const FormAuth: AdminConfigType = {
         }
         return false;
       },
+    },
+  ],
+};
+
+export const SapcdcAuth: AdminConfigType = {
+  type: SettingCategories.SAPCDC_AUTH,
+  categoryType: CategoryType.GENERAL,
+  controlType: SettingTypes.GROUP,
+  title: "SAP CDC authentication",
+  subText: createMessage(SAPCDC_AUTH_DESC),
+  canSave: true,
+  settings: [
+    {
+      id: "APPSMITH_SAPCDC_READ_MORE",
+      category: SettingCategories.SAPCDC_AUTH,
+      controlType: SettingTypes.CALLOUT,
+      label: "How to configure?",
+      url: SAPCDC_AUTH_SETUP_DOC,
+    },
+    {
+      id: "APPSMITH_SAPCDC_HOMEPAGE_URL",
+      category: SettingCategories.SAPCDC_AUTH,
+      controlType: SettingTypes.UNEDITABLEFIELD,
+      label: "Homepage URL",
+      fieldName: "homepage-url-form",
+      value: "", 
+      tooltip:
+        "This URL will be used while configuring the SAP CDC OAuth Client ID's homepage URL",
+      helpText: "Paste this URL in your SAP CDC developer settings.",
+    },
+    {
+      id: "APPSMITH_SAPCDC_REDIRECT_URL",
+      category: SettingCategories.SAPCDC_AUTH,
+      controlType: SettingTypes.UNEDITABLEFIELD,
+      label: "Redirect URL",
+      fieldName: "redirect-url-form",
+      value: "https://dev.appsmith.com/user/login/callback",
+      tooltip:
+        "This URL will be used while configuring the SAP CDC OAuth Client ID's authorized redirect URIs",
+      helpText: "Paste this URL in your SAP CDC developer settings.",
+    },
+    {
+      id: "APPSMITH_SAPCDC_CLIENT_ID",
+      category: SettingCategories.SAPCDC_AUTH,
+      controlType: SettingTypes.TEXTINPUT,
+      controlSubType: SettingSubtype.TEXT,
+      label: "SAP CDC Client ID",
+      isRequired: true,
+    },
+    {
+      id: "APPSMITH_SAPCDC_CLIENT_SECRET",
+      category: SettingCategories.SAPCDC_AUTH,
+      controlType: SettingTypes.TEXTINPUT,
+      controlSubType: SettingSubtype.TEXT,
+      label: "SAP CDC Client Secret",
+      isRequired: true,
     },
   ],
 };
@@ -263,6 +322,15 @@ export const FormAuthCallout: AuthMethodType = {
   isFeatureEnabled: true,
 };
 
+export const SapcdcAuthCallout: AuthMethodType = {
+  id: "APPSMITH_SAPCDC_AUTH",
+  category: SettingCategories.SAPCDC_AUTH,
+  label: "SAP CDC",
+  subText: createMessage(SAPCDC_AUTH_DESC),
+  image: Sapcdc,
+  isFeatureEnabled: true,
+};
+
 export const GoogleAuthCallout: AuthMethodType = {
   id: "APPSMITH_GOOGLE_AUTH",
   category: SettingCategories.GOOGLE_AUTH,
@@ -305,6 +373,7 @@ const AuthMethods = [
   GoogleAuthCallout,
   GithubAuthCallout,
   FormAuthCallout,
+  SapcdcAuthCallout
 ];
 
 function AuthMain() {
@@ -314,6 +383,12 @@ function AuthMain() {
     socialLoginList.includes("google");
   GithubAuth.isConnected = GithubAuthCallout.isConnected =
     socialLoginList.includes("github");
+  SapcdcAuth.isConnected = SapcdcAuthCallout.isConnected =
+    socialLoginList.includes("sapcdc");
+    console.log('socialLoginList---', socialLoginList); 
+  console.log('Is SAPCDC included?', socialLoginList.includes("sapcdc")); 
+
+
   return <AuthPage authMethods={AuthMethods} />;
 }
 
@@ -324,6 +399,6 @@ export const config: AdminConfigType = {
   controlType: SettingTypes.PAGE,
   title: "Authentication",
   canSave: false,
-  children: [FormAuth, GoogleAuth, GithubAuth],
+  children: [FormAuth, GoogleAuth, GithubAuth, SapcdcAuth],
   component: AuthMain,
 };

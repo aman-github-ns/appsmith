@@ -93,6 +93,7 @@ export function Login(props: LoginFormProps) {
   const location = useLocation();
   const isFormLoginEnabled = useSelector(getIsFormLoginEnabled);
   const socialLoginList = useSelector(getThirdPartyAuths);
+  console.log('socialLoginList---', socialLoginList);
   const queryParams = new URLSearchParams(location.search);
   const isBrandingEnabled = useFeatureFlag(
     FEATURE_FLAG.license_branding_enabled,

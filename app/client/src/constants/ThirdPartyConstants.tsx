@@ -7,6 +7,8 @@ export const GITHUB_RELEASE_URL =
   "https://github.com/appsmithorg/appsmith/releases/tag";
 export const GET_RELEASE_NOTES_URL = (tagName: string) =>
   `${GITHUB_RELEASE_URL}/${tagName}`;
+export const SAPCDC_AUTH_SETUP_DOC =
+  "https://help.sap.com/docs/SAP_CUSTOMER_DATA_CLOUD";
 export const SELF_HOSTING_DOC =
   "https://docs.appsmith.com/getting-started/setup";
 export const GOOGLE_MAPS_SETUP_DOC =
