@@ -3,6 +3,7 @@ name: Run Local Testing Script
 on:
   push:
     branches: deploy-2
+    
 
 jobs:
   run-local-testing:
