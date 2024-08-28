@@ -88,8 +88,9 @@ pretty_print "Server build successful. Starting client build ..."
 
 popd
 pushd app/client > /dev/null
-yarn > /dev/null
-if ! yarn build > /dev/null; then
+yarn > yarn.log 2>&1
+if ! yarn build > build.log 2>&1; then
+  cat build.log
   echo Client build failed >&2
   exit 1
 fi
