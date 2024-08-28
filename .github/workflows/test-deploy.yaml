@@ -49,4 +49,11 @@ jobs:
       - name: Push the docker image to Azure Container registry
         run: |
           docker push ydxregistry.azurecr.io/ydx/ydx-visualization-engineering-tool:${{ github.sha }}
-        
+
+      - name: Setting up KUBE CONTEXT for deployment to Azure K8s
+        uses: Azure/k8s-set-context@v1
+        with:
+          kubeconfig: ${{ secrets.KUBE_CONFIG_DEV  }}
+
+      - name: Update the tag
+        run: kubectl set image deployment/appsmith appsmith=ydxregistry.azurecr.io/ydx/ydx-visualization-engineering-tool:${{ github.sha }} -n appsmith           
