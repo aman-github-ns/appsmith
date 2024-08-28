@@ -87,6 +87,9 @@ module.exports = merge(common, {
   webpack: {
     configure: {
       plugins,
+      output: {
+        publicPath: "/forms/",
+      },
     },
   },
   jest: {
