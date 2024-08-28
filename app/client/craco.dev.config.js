@@ -23,6 +23,7 @@ module.exports = merge(common, {
   },
   webpack: {
     output: {
+      path: path.resolve(__dirname, './form'),
       publicPath: "/form/",
     },
     plugins: [

@@ -26,6 +26,7 @@ module.exports = {
   webpack: {
     configure: {
       output: {
+        path: path.resolve(__dirname, './form'),
         publicPath: "/form/",
       },
       resolve: {
