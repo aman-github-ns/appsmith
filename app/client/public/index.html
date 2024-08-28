@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <base href="/forms/" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
@@ -146,13 +147,13 @@
           // also seems to make the tests a bit faster, as the network load is lower.
           !window.Cypress
         ) {
-          window.addEventListener("load", function () {
-            navigator.serviceWorker
-              .register("/forms/pageService.js")
-              .catch((error) => {
-                console.error("Service Worker Registration failed: " + error);
-              });
-          });
+          // window.addEventListener("load", function () {
+          //   navigator.serviceWorker
+          //     .register("/forms/pageService.js")
+          //     .catch((error) => {
+          //       console.error("Service Worker Registration failed: " + error);
+          //     });
+          // });
         }
       };
       registerPageServiceWorker();

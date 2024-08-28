@@ -25,9 +25,9 @@ module.exports = {
   },
   webpack: {
     configure: {
-      output: {
-        publicPath: "/forms/",
-      },
+      // output: {
+      //   publicPath: "/forms/",
+      // },
       resolve: {
         alias: {
           "lodash-es": "lodash",
