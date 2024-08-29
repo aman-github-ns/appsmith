@@ -12,6 +12,12 @@ const isAirgap = process.env.REACT_APP_AIRGAP_ENABLED;
 const plugins = [];
 
 plugins.push(
+  new webpack.DefinePlugin({
+    "process.env.PUBLIC_URL": "/form",
+  }),
+);
+
+plugins.push(
   new WorkboxPlugin.InjectManifest({
     swSrc: "./src/serviceWorker.ts",
     mode: "development",
