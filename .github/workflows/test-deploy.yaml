@@ -4,7 +4,6 @@ on:
   push:
     branches: deploy-2
     
-
 jobs:
   run-local-testing:
     runs-on: ubuntu-latest
