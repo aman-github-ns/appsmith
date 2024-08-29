@@ -30,6 +30,7 @@ module.exports = merge(common, {
       new WorkboxPlugin.InjectManifest({
         swSrc: "./src/serviceWorker.ts",
         mode: "development",
+        swDest: "./form/pageService.js",
         exclude: [
           // Don’t cache source maps and PWA manifests.
           // (These are the default values of the `exclude` option: https://developer.chrome.com/docs/workbox/reference/workbox-build/#type-WebpackPartial,
