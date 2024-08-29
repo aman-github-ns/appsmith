@@ -22,10 +22,10 @@ module.exports = merge(common, {
     cacheUnaffected: true,
   },
   webpack: {
-    output: {
-      path: path.resolve(__dirname, './form'),
-      publicPath: "/form/",
-    },
+    // output: {
+    //   path: path.resolve(__dirname, './form'),
+    //   publicPath: "/form/",
+    // },
     plugins: [
       new WorkboxPlugin.InjectManifest({
         swSrc: "./src/serviceWorker.ts",
