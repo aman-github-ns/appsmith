@@ -95,10 +95,10 @@ module.exports = merge(common, {
   webpack: {
     configure: {
       plugins,
-      // output: {
-      //   path: path.resolve(__dirname, './form'),
-      //   publicPath: "/form/",
-      // },
+      output: {
+        path: path.resolve(__dirname, './form/static'),
+        // publicPath: "/form/",
+      },
     },
   },
   jest: {
