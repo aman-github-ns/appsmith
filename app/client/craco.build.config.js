@@ -97,7 +97,7 @@ module.exports = merge(common, {
       plugins,
       output: {
         path: path.resolve(__dirname, './form/static'),
-        // publicPath: "/form/",
+        publicPath: "/form/static",
       },
     },
   },
