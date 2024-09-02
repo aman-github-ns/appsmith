@@ -1,6 +1,7 @@
 const { merge } = require("webpack-merge");
 const WorkboxPlugin = require("workbox-webpack-plugin");
 const common = require("./craco.common.config.js");
+const path = require("path");
 
 module.exports = merge(common, {
   devServer: {
@@ -22,6 +23,10 @@ module.exports = merge(common, {
     cacheUnaffected: true,
   },
   webpack: {
+    output: {
+      path: path.resolve(__dirname, "./form/"),
+      publicPath: "/form/",
+    },
     plugins: [
       new WorkboxPlugin.InjectManifest({
         swSrc: "./src/serviceWorker.ts",

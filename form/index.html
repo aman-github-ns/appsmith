@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,shrink-to-fit=no"
+    />
+    <title>Appsmith</title>
+    <style>
+      #loader {
+        position: fixed;
+        left: 0;
+        top: 0;
+        height: 4px;
+        background: #d7d7d7;
+        transition: all ease-in 0.3s;
+      }
+    </style>
+    <script>
+      const parseConfig = (e) => {
+          if (
+            (e.startsWith("{") && e.startsWith("}")) ||
+            0 === e.indexOf("__") ||
+            0 === e.indexOf("$") ||
+            0 === e.indexOf("%")
+          )
+            return "";
+          const n = e.trim();
+          return (
+            "false" !== n.toLowerCase() &&
+            "" !== n &&
+            ("true" === n.toLowerCase() || n)
+          );
+        },
+        CLOUD_HOSTING = parseConfig('{{env "APPSMITH_CLOUD_HOSTING"}}'),
+        ZIPY_KEY = parseConfig('{{env "APPSMITH_ZIPY_SDK_KEY"}}'),
+        AIRGAPPED = parseConfig('{{env "APPSMITH_AIRGAP_ENABLED"}}');
+    </script>
+    <script>
+      window.__APPSMITH_CHUNKS_TO_PRELOAD = {
+        "edit-mode": [
+          "static/js/svg-icons.d88bfe91.chunk.js",
+          "static/css/3957.a92a3b13.chunk.css",
+          "static/css/3402.3cc736c2.chunk.css",
+          "static/js/3402.b4a0bb77.chunk.js",
+          "static/css/6661.4c41cc63.chunk.css",
+          "static/js/1954.ea247d7f.chunk.js",
+          "static/js/5439.4c96c351.chunk.js",
+          "static/js/global-search.10615054.chunk.js",
+          "static/js/9080.97a7b2d2.chunk.js",
+          "static/css/4806.43152269.chunk.css",
+          "static/js/4806.68272dd3.chunk.js",
+          "static/js/7568.1b4bd7e4.chunk.js",
+          "static/js/8236.a9413194.chunk.js",
+          "static/js/7270.a535ab47.chunk.js",
+          "static/css/editor.0d3ea7ff.chunk.css",
+          "static/js/editor.a2ff8e40.chunk.js",
+          "static/js/global-search.10615054.chunk.js",
+        ],
+        "view-mode": [
+          "static/js/svg-icons.d88bfe91.chunk.js",
+          "static/css/3957.a92a3b13.chunk.css",
+          "static/css/3402.3cc736c2.chunk.css",
+          "static/js/3402.b4a0bb77.chunk.js",
+          "static/js/5439.4c96c351.chunk.js",
+          "static/js/global-search.10615054.chunk.js",
+          "static/js/9080.97a7b2d2.chunk.js",
+          "static/css/4806.43152269.chunk.css",
+          "static/js/4806.68272dd3.chunk.js",
+          "static/js/7270.a535ab47.chunk.js",
+          "static/js/AppViewer.2b8ea8c2.chunk.js",
+        ],
+      };
+    </script>
+    <script>
+      if (CLOUD_HOSTING && ZIPY_KEY) {
+        const n = document.createElement("script");
+        (n.crossOrigin = "anonymous"),
+          (n.defer = !0),
+          (n.src = "https://cdn.zipy.ai/sdk/v1.0/zipy.min.umd.js"),
+          (n.onload = () => {
+            window.zipy && window.zipy.init(ZIPY_KEY);
+          });
+        const i = document.getElementsByTagName("head")[0];
+        i && i.appendChild(n);
+      }
+    </script>
+    <script defer="defer" src="/form/static/js/main.3dcfe941.js"></script>
+    <link href="/form/static/css/main.70fe5dfe.css" rel="stylesheet" />
+  </head>
+  <body class="appsmith-light-theme">
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="loader" style="width: 30vw"></div>
+    <div id="header-root"></div>
+    <div id="root"></div>
+    <div
+      id="date-picker-control"
+      style="position: relative; z-index: 1000"
+    ></div>
+    <script type="text/javascript">
+      const getIsLocalStorageSupported = () => {
+          try {
+            return (
+              window.localStorage.setItem("test", "testA"),
+              window.localStorage.removeItem("test"),
+              !0
+            );
+          } catch (e) {
+            return !1;
+          }
+        },
+        isLocalStorageSupported = getIsLocalStorageSupported(),
+        handleLocalStorageNotSupportedError = () => {
+          console.error(
+            "Localstorage storage is not supported on your device.",
+          );
+        },
+        localStorageUtil = {
+          getItem: (e) => {
+            if (isLocalStorageSupported) return window.localStorage.getItem(e);
+            handleLocalStorageNotSupportedError();
+          },
+          removeItem: (e) => {
+            if (isLocalStorageSupported)
+              return window.localStorage.removeItem(e);
+            handleLocalStorageNotSupportedError();
+          },
+          setItem: (e, r) => {
+            if (isLocalStorageSupported)
+              return window.localStorage.setItem(e, r);
+            handleLocalStorageNotSupportedError();
+          },
+        };
+      window.addEventListener("DOMContentLoaded", (e) => {
+        document.getElementById("loader").style.width = "50vw";
+      });
+      const registerPageServiceWorker = () => {
+        "serviceWorker" in navigator &&
+          !window.Cypress &&
+          window.addEventListener("load", function () {
+            navigator.serviceWorker.register("/pageService.js").catch((e) => {
+              console.error("Service Worker Registration failed: " + e);
+            });
+          });
+      };
+      "serviceWorker" in navigator &&
+        !window.Cypress &&
+        window.addEventListener("load", function () {
+          navigator.serviceWorker.register("/pageService.js").catch((e) => {
+            console.error("Service Worker Registration failed: " + e);
+          });
+        });
+    </script>
+    <script type="text/javascript">
+      const LOG_LEVELS = ["debug", "error"],
+        CONFIG_LOG_LEVEL_INDEX = LOG_LEVELS.indexOf(
+          parseConfig('{{env "APPSMITH_CLIENT_LOG_LEVEL"}}'),
+        ),
+        INTERCOM_APP_ID =
+          parseConfig("%REACT_APP_INTERCOM_APP_ID%") ||
+          parseConfig('{{env "APPSMITH_INTERCOM_APP_ID"}}'),
+        DISABLE_INTERCOM = parseConfig('{{env "APPSMITH_DISABLE_INTERCOM"}}');
+      INTERCOM_APP_ID.length &&
+        !DISABLE_INTERCOM &&
+        (function () {
+          var e = window,
+            _ = e.Intercom;
+          if ("function" == typeof _)
+            _("reattach_activator"), _("update", e.intercomSettings);
+          else {
+            var n = document,
+              E = function () {
+                E.c(arguments);
+              };
+            (E.q = []),
+              (E.c = function (e) {
+                E.q.push(e);
+              }),
+              (e.Intercom = E);
+            var I = function () {
+              var e = n.createElement("script");
+              (e.type = "text/javascript"),
+                (e.async = !0),
+                (e.src =
+                  "https://widget.intercom.io/widget/" + INTERCOM_APP_ID);
+              var _ = n.getElementsByTagName("script")[0];
+              _.parentNode.insertBefore(e, _);
+            };
+            "complete" === document.readyState
+              ? I()
+              : e.attachEvent
+                ? e.attachEvent("onload", I)
+                : e.addEventListener("load", I, !1);
+          }
+        })(),
+        (window.SENTRY_CONFIG = parseConfig('{{env "APPSMITH_SENTRY_DSN"}}')),
+        (window.APPSMITH_FEATURE_CONFIGS = {
+          sentry: {
+            dsn: parseConfig('{{env "APPSMITH_SENTRY_DSN"}}'),
+            release: parseConfig('{{env "APPSMITH_SENTRY_RELEASE"}}'),
+            environment: parseConfig('{{env "APPSMITH_SENTRY_ENVIRONMENT"}}'),
+          },
+          smartLook: { id: parseConfig('{{env "APPSMITH_SMART_LOOK_ID"}}') },
+          segment: {
+            apiKey: parseConfig('{{env "APPSMITH_SEGMENT_KEY"}}'),
+            ceKey: parseConfig('{{env "APPSMITH_SEGMENT_CE_KEY"}}'),
+          },
+          newRelic: {
+            enableNewRelic: parseConfig(
+              '{{env "APPSMITH_NEW_RELIC_ACCOUNT_ENABLE"}}',
+            ),
+            accountId: parseConfig('{{env "APPSMITH_NEW_RELIC_ACCOUNT_ID"}}'),
+            applicationId: parseConfig(
+              '{{env "APPSMITH_NEW_RELIC_APPLICATION_ID"}}',
+            ),
+            browserAgentlicenseKey: parseConfig(
+              '{{env "APPSMITH_NEW_RELIC_BROWSER_AGENT_LICENSE_KEY"}}',
+            ),
+            browserAgentEndpoint: parseConfig(
+              '{{env "APPSMITH_NEW_RELIC_BROWSER_AGENT_ENDPOINT"}}',
+            ),
+            otlpLicenseKey: parseConfig(
+              '{{env "APPSMITH_NEW_RELIC_OTLP_LICENSE_KEY"}}',
+            ),
+            otlpServiceName: parseConfig(
+              '{{env "APPSMITH_NEW_RELIC_OTEL_SERVICE_NAME"}}',
+            ),
+            otlpEndpoint: parseConfig(
+              '{{env "APPSMITH_NEW_RELIC_OTEL_EXPORTER_OTLP_ENDPOINT"}}',
+            ),
+          },
+          fusioncharts: {
+            licenseKey: parseConfig(
+              '{{env "APPSMITH_FUSIONCHARTS_LICENSE_KEY"}}',
+            ),
+          },
+          enableMixpanel: parseConfig('{{env "APPSMITH_SEGMENT_KEY"}}'),
+          algolia: {
+            apiId: parseConfig('{{env "APPSMITH_ALGOLIA_API_ID"}}'),
+            apiKey: parseConfig('{{env "APPSMITH_ALGOLIA_API_KEY"}}'),
+            indexName: parseConfig(
+              '{{env "APPSMITH_ALGOLIA_SEARCH_INDEX_NAME"}}',
+            ),
+          },
+          logLevel:
+            CONFIG_LOG_LEVEL_INDEX > -1
+              ? LOG_LEVELS[CONFIG_LOG_LEVEL_INDEX]
+              : LOG_LEVELS[1],
+          cloudHosting: CLOUD_HOSTING,
+          appVersion: {
+            id: parseConfig('{{env "APPSMITH_VERSION_ID"}}'),
+            sha: parseConfig('{{env "APPSMITH_VERSION_SHA"}}'),
+            releaseDate: parseConfig('{{env "APPSMITH_VERSION_RELEASE_DATE"}}'),
+          },
+          intercomAppID: INTERCOM_APP_ID,
+          mailEnabled: parseConfig('{{env "APPSMITH_MAIL_ENABLED"}}'),
+          cloudServicesBaseUrl:
+            parseConfig('{{env "APPSMITH_CLOUD_SERVICES_BASE_URL"}}') ||
+            "https://cs.appsmith.com",
+          googleRecaptchaSiteKey: parseConfig(
+            '{{env "APPSMITH_RECAPTCHA_SITE_KEY"}}',
+          ),
+          hideWatermark: parseConfig('{{env "APPSMITH_HIDE_WATERMARK"}}'),
+          disableIframeWidgetSandbox: parseConfig(
+            '{{env "APPSMITH_DISABLE_IFRAME_WIDGET_SANDBOX"}}',
+          ),
+          customerPortalUrl:
+            parseConfig('{{env "APPSMITH_CUSTOMER_PORTAL_URL"}}') ||
+            "https://customer.appsmith.com",
+          pricingUrl:
+            parseConfig('{{env "APPSMITH_PRICING_URL"}}') ||
+            "https://www.appsmith.com/pricing",
+        });
+    </script>
+  </body>
+</html>
