@@ -26,6 +26,7 @@ COPY ${PLUGIN_JARS} backend/plugins/
 
 # Add client UI - Application Layer
 COPY ./app/client/build editor/
+RUN cp -r static form/
 
 # Add RTS - Application Layer
 COPY ./app/client/packages/rts/dist rts/
