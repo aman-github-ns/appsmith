@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
+//* eslint-disable @typescript-eslint/no-var-requires */
 const SentryWebpackPlugin = require("@sentry/webpack-plugin");
 const { merge } = require("webpack-merge");
 const common = require("./craco.common.config.js");
@@ -92,6 +92,9 @@ plugins.push(
 );
 
 module.exports = merge(common, {
+  devServer:{
+    historyApiFallback: true,
+  },
   webpack: {
     configure: {
       plugins,
