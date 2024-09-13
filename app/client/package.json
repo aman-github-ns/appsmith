@@ -137,7 +137,6 @@
     "js-regex-pl": "^1.0.1",
     "js-sha256": "^0.9.0",
     "jshint": "^2.13.4",
-    "jwt-decode": "^4.0.0",
     "klona": "^2.0.5",
     "konva": "8.0.1",
     "libphonenumber-js": "^1.9.44",

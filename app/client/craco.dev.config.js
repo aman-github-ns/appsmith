@@ -1,7 +1,6 @@
 const { merge } = require("webpack-merge");
 const WorkboxPlugin = require("workbox-webpack-plugin");
 const common = require("./craco.common.config.js");
-const path = require("path");
 
 module.exports = merge(common, {
   devServer: {

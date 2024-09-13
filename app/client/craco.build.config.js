@@ -85,9 +85,6 @@ plugins.push(
 
 module.exports = merge(common, {
   webpack: {
-    devServer: {
-      historyApiFallback: true,
-    },
     configure: {
       plugins,
     },
