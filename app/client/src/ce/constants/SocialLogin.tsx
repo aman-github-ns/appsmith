@@ -1,7 +1,7 @@
 import {
   GoogleOAuthURL,
   GithubOAuthURL,
-  SAPCDCOAuthURL
+  SAPCDCOAuthURL,
 } from "@appsmith/constants/ApiConstants";
 
 import GithubLogo from "assets/images/Github.png";
@@ -27,10 +27,10 @@ export const GithubSocialLoginButtonProps: SocialLoginButtonProps = {
 };
 
 export const SAPCDCSocialLoginButtonProps: SocialLoginButtonProps = {
-  url: SAPCDCOAuthURL ,
+  url: SAPCDCOAuthURL,
   name: "SAP CDC",
   logo: SapCDCLogo,
-}
+};
 
 export const SocialLoginButtonPropsList: Record<
   string,

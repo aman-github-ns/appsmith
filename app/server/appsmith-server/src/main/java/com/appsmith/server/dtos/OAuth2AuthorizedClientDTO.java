@@ -71,6 +71,7 @@ public class OAuth2AuthorizedClientDTO {
     }
 
     public static OAuth2AuthorizedClientDTO fromOAuth2AuthorizedClient(final OAuth2AuthorizedClient client) {
+        System.out.println("fromOAuth2AuthorizedClient");
         final ClientRegistration cr = client.getClientRegistration();
         final ClientRegistration.ProviderDetails pd = cr.getProviderDetails();
         final OAuth2AccessToken at = client.getAccessToken();
@@ -109,6 +110,7 @@ public class OAuth2AuthorizedClientDTO {
     }
 
     public OAuth2AuthorizedClient makeOAuth2AuthorizedClient() {
+        System.out.println("makeOAuth2AuthorizedClient");
         OAuth2AccessToken.TokenType tokenType;
         if (OAuth2AccessToken.TokenType.BEARER.getValue().equals(accessToken.tokenType)) {
             tokenType = OAuth2AccessToken.TokenType.BEARER;
@@ -117,6 +119,7 @@ public class OAuth2AuthorizedClientDTO {
                     "Could not deserialize OAuth2AuthorizedClient, unknown token type: " + accessToken.tokenType);
         }
 
+        System.out.println("clientRegistration: " + clientRegistration);
         return new OAuth2AuthorizedClient(
                 ClientRegistration.withRegistrationId(clientRegistration.registrationId)
                         .clientId(clientRegistration.clientId)

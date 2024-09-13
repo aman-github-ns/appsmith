@@ -129,6 +129,9 @@ public class UserSignupCEImpl implements UserSignupCE {
      */
     public Mono<User> signupAndLogin(User user, ServerWebExchange exchange) {
 
+        log.debug("Signing up and logging in user {}, exchange {}", user, exchange);
+        System.out.println("Signing up and logging in user " + user + ", exchange " + exchange);
+
         if (!validateEmail(user.getUsername())) {
             return Mono.error(new AppsmithException(AppsmithError.INVALID_PARAMETER, EMAIL));
         }

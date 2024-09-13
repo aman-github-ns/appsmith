@@ -37,6 +37,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
+import java.lang.reflect.Method;
 import java.net.URI;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -135,6 +136,8 @@ public class AuthenticationSuccessHandlerCE implements ServerAuthenticationSucce
      */
     @Override
     public Mono<Void> onAuthenticationSuccess(WebFilterExchange webFilterExchange, Authentication authentication) {
+        System.out.println("On authentication success");
+        log.debug("On authentication success");
         return onAuthenticationSuccess(webFilterExchange, authentication, false, false, null);
     }
 
@@ -252,6 +255,11 @@ public class AuthenticationSuccessHandlerCE implements ServerAuthenticationSucce
             boolean isFromSignup,
             String defaultWorkspaceId) {
         log.debug("Login succeeded for user: {}", authentication.getPrincipal());
+        Method[] methods = authentication.getClass().getMethods();
+        for (Method method : methods) {
+            String methodName = method.getName();
+            System.out.println(methodName);
+        }
         Mono<Void> redirectionMono = null;
         User user = (User) authentication.getPrincipal();
         String originHeader =
@@ -273,10 +281,8 @@ public class AuthenticationSuccessHandlerCE implements ServerAuthenticationSucce
             // invalidate any password which may have been set during a form login.
             LoginSource authenticationLoginSource = LoginSource.fromString(
                     ((OAuth2AuthenticationToken) authentication).getAuthorizedClientRegistrationId());
-            log.debug("the login source is {}", authenticationLoginSource);
-            log.debug("the login source is {}", user.toString());
+            log.info("UserLoginSource: {}", user.getSource());
             if (!authenticationLoginSource.equals(user.getSource())) {
-                // if (!user.getSource().equals(authenticationLoginSource)) {
                 user.setPassword(null);
                 user.setSource(authenticationLoginSource);
                 // Update the user in separate thread
@@ -301,6 +307,7 @@ public class AuthenticationSuccessHandlerCE implements ServerAuthenticationSucce
                 redirectionMono = handleOAuth2Redirect(webFilterExchange, null, isFromSignup);
             }
         } else {
+            log.info("UserLoginSource: {}", user.getSource());
             // form type signup/login handler
             redirectionMono = formEmailVerificationRedirectionHandler(
                     webFilterExchange,
@@ -372,6 +379,8 @@ public class AuthenticationSuccessHandlerCE implements ServerAuthenticationSucce
         application.setName("My first application");
         Mono<Application> applicationMono = Mono.just(application);
         if (defaultWorkspaceId == null) {
+
+            // we can check the users tenant ID here and then create the default application
 
             applicationMono = workspaceRepository
                     .findAll(workspacePermission.getEditPermission())

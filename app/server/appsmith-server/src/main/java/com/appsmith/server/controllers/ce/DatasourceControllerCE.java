@@ -158,7 +158,7 @@ public class DatasourceControllerCE {
     @JsonView(Views.Public.class)
     @GetMapping("/authorize")
     public Mono<Void> getAccessToken(AuthorizationCodeCallbackDTO callbackDTO, ServerWebExchange serverWebExchange) {
-        log.debug("Received callback for an OAuth2 authorization request" + callbackDTO);
+        log.debug("Received callback for an OAuth2 authorization request");
         return authenticationService.getAccessTokenForGenericOAuth2(callbackDTO).flatMap(url -> {
             serverWebExchange.getResponse().setStatusCode(HttpStatus.FOUND);
             serverWebExchange.getResponse().getHeaders().setLocation(URI.create(url));

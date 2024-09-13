@@ -19,7 +19,8 @@ const logLevel: LogLevelDesc = (process.env.APPSMITH_LOG_LEVEL ||
   "debug") as LogLevelDesc;
 log.setLevel(logLevel);
 
-const API_BASE_URL = process.env.APPSMITH_API_BASE_URL;
+let API_BASE_URL = process.env.APPSMITH_API_BASE_URL;
+API_BASE_URL = "/form";
 if (API_BASE_URL == null || API_BASE_URL === "") {
   log.error("Please provide a valid value for `APPSMITH_API_BASE_URL`.");
   process.exit(1);

@@ -36,8 +36,6 @@ public class CustomOidcUserServiceCEImpl extends OidcReactiveOAuth2UserService {
 
     @Override
     public Mono<OidcUser> loadUser(OidcUserRequest userRequest) throws OAuth2AuthenticationException {
-        System.out.println("CustomOidcUserServiceCEImpl.loadUser");
-        log.info("CustomOidcUserServiceCEImpl.loadUser");
         Mono<OidcUser> oidcUserMono = super.loadUser(userRequest);
 
         return oidcUserMono.flatMap(oidcUser -> checkAndCreateUser(oidcUser, userRequest));
@@ -49,9 +47,6 @@ public class CustomOidcUserServiceCEImpl extends OidcReactiveOAuth2UserService {
     public Mono<User> checkAndCreateUser(OidcUser oidcUser, OidcUserRequest userRequest) {
 
         String username = (!StringUtils.isEmpty(oidcUser.getEmail())) ? oidcUser.getEmail() : oidcUser.getName();
-
-        System.out.println("CustomOidcUserServiceCEImpl.checkAndCreateUser");
-        log.info("CustomOidcUserServiceCEImpl.checkAndCreateUser");
 
         return repository
                 .findByEmail(username)

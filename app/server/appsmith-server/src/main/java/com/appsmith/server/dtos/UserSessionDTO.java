@@ -86,6 +86,8 @@ public class UserSessionDTO {
         session.isEnabled = user.isEnabled();
         session.workspaceIds = user.getWorkspaceIds();
         session.tenantId = user.getTenantId();
+        // write tenantID to log
+        System.out.println("tenantId: " + session.tenantId);
         session.emailVerified = Boolean.TRUE.equals(user.getEmailVerified());
         session.emailVerificationRequired = Boolean.TRUE.equals(user.getEmailVerificationRequired());
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Route, Switch, useLocation, useRouteMatch } from "react-router-dom";
 import Login from "pages/UserAuth/Login";
 import SignUp from "pages/UserAuth/SignUp";

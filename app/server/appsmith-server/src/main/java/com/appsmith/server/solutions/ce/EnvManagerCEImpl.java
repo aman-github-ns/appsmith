@@ -548,7 +548,6 @@ public class EnvManagerCEImpl implements EnvManagerCE {
                 APPSMITH_OAUTH2_GOOGLE_CLIENT_ID.name(),
                 APPSMITH_OAUTH2_GITHUB_CLIENT_ID.name(),
                 APPSMITH_OAUTH2_SAPCDC_CLIENT_ID.name()));
-
         // Add extra authentication methods
         authEnvs.addAll(extraAuthEnvs);
 

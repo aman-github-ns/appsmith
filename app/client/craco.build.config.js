@@ -11,17 +11,11 @@ const env = process.env.REACT_APP_ENVIRONMENT;
 const isAirgap = process.env.REACT_APP_AIRGAP_ENABLED;
 const plugins = [];
 
-// plugins.push(
-//   new webpack.DefinePlugin({
-//     "process.env.PUBLIC_URL": "/form",
-//   }),
-// );
-
 plugins.push(
   new WorkboxPlugin.InjectManifest({
     swSrc: "./src/serviceWorker.ts",
     mode: "development",
-    swDest: "./service-worker.js",
+    swDest: "./pageService.js",
     maximumFileSizeToCacheInBytes: 11 * 1024 * 1024,
     exclude: [
       // Don’t cache source maps and PWA manifests.
@@ -91,6 +85,9 @@ plugins.push(
 
 module.exports = merge(common, {
   webpack: {
+    devServer: {
+      historyApiFallback: true,
+    },
     configure: {
       plugins,
     },

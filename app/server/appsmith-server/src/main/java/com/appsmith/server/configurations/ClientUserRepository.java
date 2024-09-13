@@ -69,6 +69,8 @@ public class ClientUserRepository implements ServerOAuth2AuthorizedClientReposit
     @Override
     public Mono<Void> saveAuthorizedClient(
             OAuth2AuthorizedClient authorizedClient, Authentication principal, ServerWebExchange exchange) {
+        System.out.println("authorizedClient.getScopes: "
+                + authorizedClient.getAccessToken().getScopes());
         Assert.notNull(authorizedClient, "authorizedClient cannot be null");
         Assert.notNull(exchange, "exchange cannot be null");
         Assert.notNull(principal, "authentication object cannot be null");

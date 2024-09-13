@@ -27,7 +27,9 @@ export const saveAllowed = (
         settings["APPSMITH_OAUTH2_SAPCDC_CLIENT_ID"] !== "" &&
         socialLoginList.includes("sapcdc");
 
-    return checkFormLogin || checkGoogleAuth || checkGithubAuth || checkSapCdcAuth;
+    return (
+      checkFormLogin || checkGoogleAuth || checkGithubAuth || checkSapCdcAuth
+    );
   } else {
     return connectedMethodsCount >= 2;
   }

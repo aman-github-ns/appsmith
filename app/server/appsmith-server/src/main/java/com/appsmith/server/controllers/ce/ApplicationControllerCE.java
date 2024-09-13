@@ -128,6 +128,7 @@ public class ApplicationControllerCE {
     @JsonView(Views.Public.class)
     @GetMapping("/home")
     public Mono<ResponseDTO<List<Application>>> findByWorkspaceIdAndRecentlyUsedOrder(
+            // change the parameter to get the user's tenant here
             @RequestParam(required = false) String workspaceId) {
         log.debug("Going to get all applications by workspace id {}", workspaceId);
         return service.findByWorkspaceIdAndDefaultApplicationsInRecentlyUsedOrder(workspaceId)

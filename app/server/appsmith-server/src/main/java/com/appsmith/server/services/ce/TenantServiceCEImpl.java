@@ -158,7 +158,6 @@ public class TenantServiceCEImpl extends BaseService<TenantRepository, Tenant, S
             if (StringUtils.hasText(System.getenv("APPSMITH_OAUTH2_SAPCDC_CLIENT_ID"))) {
                 config.addThirdPartyAuth("sapcdc");
             }
-
             config.setIsFormLoginEnabled(!"true".equals(System.getenv("APPSMITH_FORM_LOGIN_DISABLED")));
 
             return tenant;

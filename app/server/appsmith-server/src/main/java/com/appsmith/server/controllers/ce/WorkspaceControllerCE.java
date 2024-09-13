@@ -44,19 +44,24 @@ public class WorkspaceControllerCE {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Mono<ResponseDTO<Workspace>> create(@Valid @RequestBody Workspace resource) {
+        System.out.println("Creating workspace with resource: " + resource);
         return service.create(resource).map(created -> new ResponseDTO<>(HttpStatus.CREATED.value(), created, null));
     }
 
     @JsonView(Views.Public.class)
     @PutMapping("/{id}")
     public Mono<ResponseDTO<Workspace>> update(@PathVariable String id, @RequestBody Workspace resource) {
+        System.out.println("Updating workspace with id: " + id);
+        System.out.println("Updating workspace with resource: " + resource);
         return service.update(id, resource)
+                .doOnNext(updatedResource -> System.out.println("Updated workspace: " + updatedResource))
                 .map(updatedResource -> new ResponseDTO<>(HttpStatus.OK.value(), updatedResource, null));
     }
 
     @JsonView(Views.Public.class)
     @DeleteMapping("/{id}")
     public Mono<ResponseDTO<Workspace>> delete(@PathVariable String id) {
+        System.out.println("Deleting workspace with id: " + id);
         return service.archiveById(id)
                 .map(deletedResource -> new ResponseDTO<>(HttpStatus.OK.value(), deletedResource, null));
     }

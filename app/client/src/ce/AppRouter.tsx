@@ -37,6 +37,7 @@ import AppViewerLoader from "pages/AppViewer/loader";
 import LandingScreen from "../LandingScreen";
 import UserAuth from "pages/UserAuth";
 import Users from "pages/users";
+import TokenHandler from "components/TokenHandler";
 import ErrorPage from "pages/common/ErrorPage";
 import PageNotFound from "pages/common/ErrorPages/PageNotFound";
 import PageLoadingBar from "pages/common/PageLoadingBar";
@@ -88,6 +89,7 @@ export function Routes() {
         exact
         path={APPLICATIONS_URL}
       />
+      <SentryRoute component={TokenHandler} exact path="/token" />
       <SentryRoute component={SignupSuccess} exact path={SIGNUP_SUCCESS_URL} />
       <SentryRoute component={UserProfile} path={PROFILE} />
       <SentryRoute component={Setup} exact path={SETUP} />

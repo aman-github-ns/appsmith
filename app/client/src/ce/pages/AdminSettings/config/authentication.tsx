@@ -3,7 +3,7 @@ import {
   EMAIL_SETUP_DOC,
   GITHUB_SIGNUP_SETUP_DOC,
   GOOGLE_SIGNUP_SETUP_DOC,
-SAPCDC_AUTH_SETUP_DOC
+  SAPCDC_AUTH_SETUP_DOC,
 } from "constants/ThirdPartyConstants";
 import type { AdminConfigType } from "@appsmith/pages/AdminSettings/config/types";
 import {
@@ -32,7 +32,7 @@ import {
   OIDC_AUTH_DESC,
   SAML_AUTH_DESC,
   createMessage,
-  SAPCDC_AUTH_DESC
+  SAPCDC_AUTH_DESC,
 } from "@appsmith/constants/messages";
 import { isSAMLEnabled, isOIDCEnabled } from "@appsmith/utils/planHelpers";
 import { selectFeatureFlags } from "@appsmith/selectors/featureFlagsSelectors";
@@ -157,7 +157,7 @@ export const SapcdcAuth: AdminConfigType = {
       controlType: SettingTypes.UNEDITABLEFIELD,
       label: "Homepage URL",
       fieldName: "homepage-url-form",
-      value: "", 
+      value: "",
       tooltip:
         "This URL will be used while configuring the SAP CDC OAuth Client ID's homepage URL",
       helpText: "Paste this URL in your SAP CDC developer settings.",
@@ -373,7 +373,6 @@ const AuthMethods = [
   GoogleAuthCallout,
   GithubAuthCallout,
   FormAuthCallout,
-  SapcdcAuthCallout
 ];
 
 function AuthMain() {
@@ -385,10 +384,6 @@ function AuthMain() {
     socialLoginList.includes("github");
   SapcdcAuth.isConnected = SapcdcAuthCallout.isConnected =
     socialLoginList.includes("sapcdc");
-    console.log('socialLoginList---', socialLoginList); 
-  console.log('Is SAPCDC included?', socialLoginList.includes("sapcdc")); 
-
-
   return <AuthPage authMethods={AuthMethods} />;
 }
 

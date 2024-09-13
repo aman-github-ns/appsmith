@@ -32,8 +32,8 @@ public class CustomOAuth2UserServiceCEImpl extends DefaultReactiveOAuth2UserServ
 
     @Override
     public Mono<OAuth2User> loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-        System.out.println("CustomOAuth2UserServiceCEImpl.loadUser");
-        log.info("CustomOAuth2UserServiceCEImpl.loadUser");
+        log.debug("Loading user with userRequest: {}", userRequest);
+        System.out.println("Loading user with userRequest: " + userRequest);
         Mono<OAuth2User> oauth2UserMono = super.loadUser(userRequest);
 
         return oauth2UserMono.flatMap(oAuth2User -> checkAndCreateUser(oAuth2User, userRequest));
@@ -45,9 +45,6 @@ public class CustomOAuth2UserServiceCEImpl extends DefaultReactiveOAuth2UserServ
     private Mono<User> checkAndCreateUser(OAuth2User oAuth2User, OAuth2UserRequest userRequest) {
 
         String username = oAuth2User.getName();
-
-        System.out.println("CsutomOAuth2UserServiceCEImpl.checkAndCreateUser");
-        log.info("CustomOAuth2UserServiceCEImpl.checkAndCreateUser");
 
         return repository
                 .findByEmail(username)

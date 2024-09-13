@@ -141,7 +141,6 @@ public class SecurityConfig {
     @Order(Ordered.HIGHEST_PRECEDENCE)
     @Bean
     public SecurityWebFilterChain internalWebFilterChain(ServerHttpSecurity http) {
-        System.out.println("SecurityConfig.internalWebFilterChain");
         return http.securityMatcher(new PathPatternParserServerWebExchangeMatcher("/actuator/**"))
                 .httpBasic(httpBasicSpec -> httpBasicSpec.authenticationManager(authentication -> {
                     if (INTERNAL_PASSWORD.equals(authentication.getCredentials().toString())) {
@@ -162,8 +161,6 @@ public class SecurityConfig {
     @Bean
     @SuppressWarnings("Convert2MethodRef") // Helps readability.
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
-        System.out.println("SecurityConfig.securityWebFilterChain");
-        System.out.println(reactiveClientRegistrationRepository.toString());
         ServerAuthenticationEntryPointFailureHandler failureHandler =
                 new ServerAuthenticationEntryPointFailureHandler(authenticationEntryPoint);
 
@@ -258,7 +255,6 @@ public class SecurityConfig {
      */
     @Bean
     public WebSessionIdResolver webSessionIdResolver() {
-        System.out.println("SecurityConfig.webSessionIdResolver");
         CookieWebSessionIdResolver resolver = new CookieWebSessionIdResolver();
         // Setting the max age to 30 days so that the cookie doesn't expire on browser close
         // If the max age is not set, some browsers will default to deleting the cookies on session close.
@@ -269,7 +265,6 @@ public class SecurityConfig {
     }
 
     private User createAnonymousUser() {
-        System.out.println("SecurityConfig.createAnonymousUser");
         User user = new User();
         user.setName(FieldName.ANONYMOUS_USER);
         user.setEmail(FieldName.ANONYMOUS_USER);
@@ -279,7 +274,6 @@ public class SecurityConfig {
     }
 
     private Mono<Void> sanityCheckFilter(ServerWebExchange exchange, WebFilterChain chain) {
-        System.out.println("SecurityConfig.sanityCheckFilter");
         // 1. Check if the content-type is valid at all. Mostly just checks if it contains a `/`.
         MediaType contentType;
         try {
@@ -300,7 +294,6 @@ public class SecurityConfig {
     }
 
     private Mono<Void> writeErrorResponse(ServerWebExchange exchange, WebFilterChain chain, String message) {
-        System.out.println("SecurityConfig.writeErrorResponse");
         final ServerHttpResponse response = exchange.getResponse();
         response.setStatusCode(HttpStatus.BAD_REQUEST);
         response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
