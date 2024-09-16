@@ -2,7 +2,7 @@ name: Run Local Testing Script
 
 on:
   push:
-    branches: SSO-deploy
+    branches: SSO
     
 jobs:
   run-local-testing:
