@@ -55,4 +55,4 @@ jobs:
           kubeconfig: ${{ secrets.KUBE_CONFIG_DEV  }}
 
       - name: Update the tag
-        run: kubectl set image sts/appsmith-helm appsmith-helm=ydxregistry.azurecr.io/ydx/ydx-visualization-engineering-tool:${{ github.sha }} -n appsmith-helm           
+        run: kubectl set image statefulset/appsmith-helm appsmith=ydxregistry.azurecr.io/ydx/ydx-visualization-engineering-tool:a89b019ab274f59f8d97e3858f16cd42ac86f872 -n appsmith-helm           
