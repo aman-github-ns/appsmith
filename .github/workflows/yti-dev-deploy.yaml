@@ -4,6 +4,7 @@ on:
   push:
     branches: SSO
     
+    
 jobs:
   run-local-testing:
     runs-on: ubuntu-latest
