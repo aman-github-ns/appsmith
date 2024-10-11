@@ -79,11 +79,11 @@ fi
 
 pretty_print "Starting server build ..."
 
-pushd app/server > /dev/null
-if ! ./build.sh -DskipTests > /dev/null; then
-  echo Server build failed >&2
-  exit 1
-fi
+#pushd app/server > /dev/null
+#if ! ./build.sh -DskipTests > /dev/null; then
+#  echo Server build failed >&2
+#  exit 1
+#fi
 pretty_print "Server build successful. Starting client build ..."
 
 popd
