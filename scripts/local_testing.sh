@@ -79,7 +79,7 @@ fi
 
 pretty_print "Starting server build ..."
 
-#pushd app/server > /dev/null
+pushd app/server > /dev/null
 #if ! ./build.sh -DskipTests > /dev/null; then
 #  echo Server build failed >&2
 #  exit 1
